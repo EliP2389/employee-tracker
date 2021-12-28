@@ -8,7 +8,7 @@ const loadMainMenu = () => {
          {
          type: "rawlist",
          name: "choices",
-         message: "What would ypu like to do?",
+         message: "What would you like to do?",
          choices: [
              "View all departments",
              "View all roles",
@@ -55,23 +55,31 @@ const displayDepartments = () => {
             return (err)
         }
         return console.table(res)
-      
-      
-     
-    })
+    });
 };
 
 const displayRoles = () => {
 
-    const sql = "SELECT * FROM roles"
+    const sql = "SELECT id, title FROM roles"
 
     connection.query(sql, (err, res) => {
         if(err) {
             return (err)
         }
         return console.table(res)
-    })
-}
+    });
+};
+const displayEmployees = () => {
+
+    const sql = "SELECT id, first_name, last_name FROM employees"
+
+    connection.query(sql, (err, res) => {
+        if(err) {
+            return (err)
+        }
+        return console.table(res)
+    });
+};
 loadMainMenu()
 
 
