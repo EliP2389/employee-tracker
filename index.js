@@ -61,7 +61,18 @@ const displayDepartments = () => {
     })
 };
 
+const displayRoles = () => {
 
+    const sql = "SELECT * FROM roles"
+
+    connection.query(sql, (err, res) => {
+        if(err) {
+            return (err)
+        }
+        return console.table(res)
+    })
+}
+loadMainMenu()
 
 
 
