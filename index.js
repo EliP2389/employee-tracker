@@ -46,6 +46,22 @@ const loadMainMenu = () => {
     }
 })
 }
+const displayDepartments = () => {
+
+    const sql = "SELECT * FROM department"
+
+    connection.query(sql, (err, res) => {
+        if(err) {
+            return (err)
+        }
+        return console.table(res)
+      
+      
+     
+    })
+};
+
+
 
 
 
