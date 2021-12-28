@@ -20,6 +20,33 @@ const loadMainMenu = () => {
          ]
      }
  ])
+ .then((selections) => {
+    const { choices } = selections;
+
+    if(choices === "View all departments") {
+        displayDepartments();
+    }
+    if(choices === "View all roles") {
+        displayRoles();
+    }
+    if(choices === "View all employees") {
+        displayEmployees();
+    }
+    if(choices === "Add a department") {
+        addNewDepartment();
+    }
+    if(choices === "Add a role") {
+        addNewRole();
+    }
+    if(choices === "Add an employee") {
+        addNewEmployee();
+    }
+    if(choices === "Update employee role") {
+        updateEmployeeRole();
+    }
+})
+}
+
 
 
 
