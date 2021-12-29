@@ -211,8 +211,60 @@ const addNewEmployee = () => {
         .prompt([
             {
                 type: 'input',
-                name: 'addEmployee',
-                message: "What employee do you want to add?",
+                name: 'addEmpId',
+                message: "Add an ID for the employee?",
+                validate: addDept => {
+                    if (addDept) {
+                        return true;
+                    } else {
+                        console.log('Please enter a Employee');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'addFirstName',
+                message: "What is the employee's first name?",
+                validate: addDept => {
+                    if (addDept) {
+                        return true;
+                    } else {
+                        console.log('Please enter a Employee');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'addLastName',
+                message: "What is the employee's last name?",
+                validate: addDept => {
+                    if (addDept) {
+                        return true;
+                    } else {
+                        console.log('Please enter a Employee');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'addRoleId',
+                message: "What Role ID is this employee connected to?",
+                validate: addDept => {
+                    if (addDept) {
+                        return true;
+                    } else {
+                        console.log('Please enter a Employee');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'addManagerId',
+                message: "What manager ID is this employee connected to?",
                 validate: addDept => {
                     if (addDept) {
                         return true;
