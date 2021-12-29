@@ -145,7 +145,7 @@ const addNewRole = () => {
             {
                 type: 'input',
                 name: 'addRoleTitle',
-                message: "What role do you want to add?",
+                message: "Add role TITLE?",
                 validate: addRoleTitle => {
                     if (addRoleTitle) {
                         return true;
