@@ -61,7 +61,7 @@ const displayDepartments = () => {
 
 const displayRoles = () => {
 
-    const sql = `SELECT id, title FROM roles`;
+    const sql = `SELECT * FROM roles`;
 
     connection.query(sql, (err, res) => {
         if (err) throw err;
@@ -74,7 +74,7 @@ const displayRoles = () => {
 
 const displayEmployees = () => {
 
-    const sql = `SELECT id, first_name, last_name FROM employees`;
+    const sql = `SELECT * FROM employees`;
 
     connection.query(sql, (err, res) => {
         if (err) throw err;
@@ -227,11 +227,11 @@ const addNewEmployee = () => {
             },
             {
                 type: 'input',
-                name: 'addFirstName',
+                name: 'addEmpFirstName',
                 message: "What is the employee's first name?",
                 input: "",
-                validate: addFirstName => {
-                    if (addFirstName) {
+                validate: addEmpFirstName => {
+                    if (addEmpFirstName) {
                         return true;
                     } else {
                         console.log('Please enter a Employee first name');
@@ -241,11 +241,11 @@ const addNewEmployee = () => {
             },
             {
                 type: 'input',
-                name: 'addLastName',
+                name: 'addEmpLastName',
                 message: "What is the employee's last name?",
                 input: "",
-                validate: addLastName => {
-                    if (addLastName) {
+                validate: addEmpLastName => {
+                    if (addEmpLastName) {
                         return true;
                     } else {
                         console.log('Please enter a Employee last name');
@@ -255,11 +255,11 @@ const addNewEmployee = () => {
             },
             {
                 type: 'input',
-                name: 'addRoleId',
+                name: 'addEmpRoleId',
                 message: "What Role ID is this employee connected to?",
                 input: "",
-                validate: addRoleId => {
-                    if (addRoleId) {
+                validate: addEmpRoleId => {
+                    if (addEmpRoleId) {
                         return true;
                     } else {
                         console.log('Please enter a Employee role id');
@@ -284,12 +284,12 @@ const addNewEmployee = () => {
         ])
         .then((answer) => {
             const { input } = answer;
-            const sql = `INSERT INTO roles (id, first_name, last_name, role_id, manager_id)
-        VALUES ("${answer.addEmpId}", "${answer.addFirstName}", "${answer.addLastName}", "${answer.addRoleId}", "${answer.addManagerId}",)`;
+            const sql = `INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
+        VALUES ("${answer.addEmpId}", "${answer.addEmpFirstName}", "${answer.addEmpLastName}", "${answer.addEmpRoleId}", "${answer.addManagerId}")`;
             connection.query(sql, input, (err, res) => {
                 if (err) throw err;
 
-                console.log("Added" + answer.addEmpId + answer.addFirstName + answer.addLastName + answer.addRoleId + answer.addManagerId + " to Employee")
+                console.log("Added " + answer.addEmpId + answer.addEmpFirstName + answer.addEmpLastName + answer.addEmpRoleId + answer.addManagerId + " to Employee")
 
                 console.table(res)
 
@@ -334,13 +334,15 @@ const updateEmployeeRole = () => {
         .then((answer) => {
             const { input } = answer;
 
-            const sql = `UPDATE employees SET role_id = ("${answer.updateEmpRole}) WHERE id = ("${answer.employeeId})`
+            const sql = `UPDATE employees SET role_id = ("${answer.updateEmpRole}") WHERE id = ("${answer.employeeId}")`
             connection.query(sql, input, (err, res) => {
                 if (err) throw err;
 
                 console.log("Updated employee role")
 
                 console.table(res);
+
+                loadMainMenu()
             });
         });
 };
