@@ -13,7 +13,7 @@ const loadMainMenu = () => {
                     "View all departments",
                     "View all roles",
                     "View all employees",
-                    // "View all Managers",
+                    "View employees by manager",
                     "Add a department",
                     "Add a role",
                     "Add an employee",
@@ -34,9 +34,9 @@ const loadMainMenu = () => {
             if (choices === "View all employees") {
                 displayEmployees();
             };
-            // if (choices === "View employees by manager") {
-            //     displayManagers();
-            // };
+            if (choices === "View employees by manager") {
+                displayManagers();
+            };
             if (choices === "Add a department") {
                 addNewDepartment();
             };
@@ -93,12 +93,39 @@ const displayEmployees = () => {
     });
 };
 
-// const displayManagers = () => {
-     
-//     const sql = `SELECT manager_id FROM employees`
+const displayManagers = () => {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "empManager",
+            message: "Choose a manager ID to view their employees?",
+            input: "",
+            validate: empManager => {
+                if (empManager) {
+                    return true;
+                } else {
+                    console.log('Please enter an Id');
+                    return false;
+                };
+            }
+        }
+    ])
+    .then((answer) => {
+        const { input } = answer;
 
+    const sql = `SELECT * FROM employees WHERE manager_id = ("${answer.empManager}")`
 
-// }
+    connection.query(sql, input, (err, res) => {
+        if (err) throw err;
+
+        console.table(res);
+
+        loadMainMenu()
+    })
+
+    })
+}
 
 // function to add a department 
 const addNewDepartment = () => {
