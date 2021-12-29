@@ -18,7 +18,8 @@ const loadMainMenu = () => {
                     "Add a role",
                     "Add an employee",
                     "Update employee role",
-                    "Update employee manager"
+                    "Update employee manager",
+                    "Delete an employee"
                 ]
             }
         ])
@@ -35,7 +36,7 @@ const loadMainMenu = () => {
                 displayEmployees();
             };
             if (choices === "View employees by manager") {
-                displayManagers();
+                displayEmpByManager();
             };
             if (choices === "Add a department") {
                 addNewDepartment();
@@ -51,6 +52,9 @@ const loadMainMenu = () => {
             };
             if (choices === "Update employee manager") {
                 updateEmployeeManager();
+            };
+            if (choices === "Delete an employee") {
+                deleteEmployee();
             };
         });
 };
@@ -93,7 +97,7 @@ const displayEmployees = () => {
     });
 };
 
-const displayManagers = () => {
+const displayEmpByManager = () => {
     inquirer
     .prompt([
         {
@@ -127,7 +131,6 @@ const displayManagers = () => {
     })
 }
 
-// function to add a department 
 const addNewDepartment = () => {
     inquirer
         .prompt([
@@ -435,5 +438,30 @@ const updateEmployeeManager = () => {
             });
         });
 };
+
+const deleteEmployee = () => {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "deleteEmp",
+            message: "Delete an employee by ID",
+            input: ""
+        }
+    ])
+    .then((answer) => {
+        const { input } = answer;
+
+        const sql = `DELETE FROM employees WHERE id = ("${answer.deleteEmp}")`
+
+        connection.query(sql, input, (err, res) => {
+            if (err) throw err;
+
+            console.table(res)
+
+            loadMainMenu()
+        })
+    })
+}
 
 loadMainMenu()
