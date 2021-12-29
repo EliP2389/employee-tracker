@@ -1,8 +1,6 @@
 var inquirer = require('inquirer');
 const cTable = require('console.table');
 const connection = require('./db/connection');
-const { promise } = require('./db/connection');
-const { addListener } = require('process');
 
 const loadMainMenu = () => {
     inquirer
@@ -66,7 +64,7 @@ const displayRoles = () => {
     const sql = `SELECT id, title FROM roles`;
 
     connection.query(sql, (err, res) => {
-   if(err) throw err;
+        if (err) throw err;
         console.table(res)
 
         loadMainMenu()
@@ -79,7 +77,7 @@ const displayEmployees = () => {
 
     connection.query(sql, (err, res) => {
         if (err) throw err;
-      
+
         console.table(res)
 
         loadMainMenu()
@@ -91,18 +89,18 @@ const addNewDepartment = () => {
     inquirer
         .prompt([
             {
-               type: 'input',
-               name: 'addId',
-               message: 'Add an ID',
-               input: "",
-               validate: addId => {
-                   if (addId) {
-                       return true;
-                   } else {
-                       console.log('Please enter an Id');
-                       return false;
-                   }
-               }            
+                type: 'input',
+                name: 'addId',
+                message: 'Add an ID',
+                input: "",
+                validate: addId => {
+                    if (addId) {
+                        return true;
+                    } else {
+                        console.log('Please enter an Id');
+                        return false;
+                    }
+                }
             },
             {
                 type: 'input',
@@ -121,15 +119,17 @@ const addNewDepartment = () => {
         ])
         .then((answer) => {
             const { input } = answer;
-              const sql = `INSERT INTO department (id, name_) VALUES ("${answer.addId}","${answer.addDepartment}")`;
+            const sql = `INSERT INTO department (id, name_) VALUES ("${answer.addId}","${answer.addDepartment}")`;
 
-              connection.promise().query(sql, input, (err, res) => {
-                  if (err) throw err;
+            connection.promise().query(sql, input, (err, res) => {
+                if (err) throw err;
 
-                  console.table(res)
+                console.log("Added" + answer.addID + answer.addDepartment + " to Department")
 
-                   loadMainMenu()
-              }) ;
+                console.table(res)
+
+                loadMainMenu()
+            });
 
         });
 };
@@ -287,7 +287,9 @@ const addNewEmployee = () => {
         VALUES ("${answer.addEmpId}", "${answer.addFirstName}", "${answer.addLastName}", "${answer.addRoleId}", "${answer.addManagerId}",)`;
             connection.query(sql, input, (err, res) => {
                 if (err) throw err;
-                
+
+                console.log("Added" + answer.addEmpId + answer.addFirstName + answer.addLastName + answer.addRoleId + answer.addManagerId + " to Employee" )
+
                 console.table(res)
 
                 loadMainMenu();
