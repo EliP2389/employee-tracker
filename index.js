@@ -43,9 +43,9 @@ const loadMainMenu = () => {
             }
             if (choices === "Update employee role") {
                 updateEmployeeRole();
-            }
-        })
-}
+            };
+        });
+};
 const displayDepartments = () => {
 
     const sql = `SELECT * FROM department`;
@@ -100,7 +100,7 @@ const addNewDepartment = () => {
                     } else {
                         console.log('Please enter an Id');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -114,7 +114,7 @@ const addNewDepartment = () => {
                     } else {
                         console.log('Please enter a department');
                         return false;
-                    }
+                    };
                 }
             }
         ])
@@ -149,7 +149,7 @@ const addNewRole = () => {
                     } else {
                         console.log('Please enter a Role Id');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -163,7 +163,7 @@ const addNewRole = () => {
                     } else {
                         console.log('Please enter a Role Titile');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -177,7 +177,7 @@ const addNewRole = () => {
                     } else {
                         console.log('Please enter a Role Salary');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -191,7 +191,7 @@ const addNewRole = () => {
                     } else {
                         console.log("Please enter Dept for role")
                         return false;
-                    }
+                    };
                 }
             }
         ])
@@ -205,9 +205,9 @@ const addNewRole = () => {
                 console.table(res);
 
                 loadMainMenu()
-            })
-        })
-}
+            });
+        });
+};
 const addNewEmployee = () => {
     inquirer
         .prompt([
@@ -222,7 +222,7 @@ const addNewEmployee = () => {
                     } else {
                         console.log('Please enter a Employee ID');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -250,7 +250,7 @@ const addNewEmployee = () => {
                     } else {
                         console.log('Please enter a Employee last name');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -264,7 +264,7 @@ const addNewEmployee = () => {
                     } else {
                         console.log('Please enter a Employee role id');
                         return false;
-                    }
+                    };
                 }
             },
             {
@@ -278,7 +278,7 @@ const addNewEmployee = () => {
                     } else {
                         console.log('Please enter a Employee manager id');
                         return false;
-                    }
+                    };
                 }
             }
         ])
@@ -294,10 +294,10 @@ const addNewEmployee = () => {
                 console.table(res)
 
                 loadMainMenu();
-            })
-        })
+            });
+        });
 
-}
+};
 
 const updateEmployeeRole = () => {
     inquirer
@@ -315,8 +315,34 @@ const updateEmployeeRole = () => {
                         return false;
                     }
                 }
+            },
+            {
+                type: "input",
+                name: "employeeId",
+                message: "What is this employee's current ID?",
+                input: "",
+                validate: employeeId => {
+                    if (employeeId) {
+                        return true;
+                    } else {
+                        console.log('Please enter employee ID');
+                        return false;
+                    };
+                }
             }
         ])
-}
+        .then((answer) => {
+            const { input } = answer;
+
+            const sql = `UPDATE employees SET role_id = ("${answer.updateEmpRole}) WHERE id = ("${answer.employeeId})`
+            connection.query(sql, input, (err, res) => {
+                if (err) throw err;
+
+                console.log("Updated employee role")
+
+                console.table(res);
+            });
+        });
+};
 
 loadMainMenu()
