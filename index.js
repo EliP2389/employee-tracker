@@ -13,10 +13,12 @@ const loadMainMenu = () => {
                     "View all departments",
                     "View all roles",
                     "View all employees",
+                    // "View all Managers",
                     "Add a department",
                     "Add a role",
                     "Add an employee",
-                    "Update employee role"
+                    "Update employee role",
+                    "Update employee manager"
                 ]
             }
         ])
@@ -25,24 +27,30 @@ const loadMainMenu = () => {
 
             if (choices === "View all departments") {
                 displayDepartments();
-            }
+            };
             if (choices === "View all roles") {
                 displayRoles();
-            }
+            };
             if (choices === "View all employees") {
                 displayEmployees();
-            }
+            };
+            // if (choices === "View employees by manager") {
+            //     displayManagers();
+            // };
             if (choices === "Add a department") {
                 addNewDepartment();
-            }
+            };
             if (choices === "Add a role") {
                 addNewRole();
-            }
+            };
             if (choices === "Add an employee") {
                 addNewEmployee();
-            }
+            };
             if (choices === "Update employee role") {
                 updateEmployeeRole();
+            };
+            if (choices === "Update employee manager") {
+                updateEmployeeManager();
             };
         });
 };
@@ -84,6 +92,13 @@ const displayEmployees = () => {
         loadMainMenu()
     });
 };
+
+// const displayManagers = () => {
+     
+//     const sql = `SELECT manager_id FROM employees`
+
+
+// }
 
 // function to add a department 
 const addNewDepartment = () => {
@@ -339,6 +354,53 @@ const updateEmployeeRole = () => {
                 if (err) throw err;
 
                 console.log("Updated employee role")
+
+                console.table(res);
+
+                loadMainMenu()
+            });
+        });
+};
+const updateEmployeeManager = () => {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "updateEmpManager",
+                message: "Who is the employees new manager?",
+                input: "",
+                validate: updateEmpManager => {
+                    if (updateEmpManager) {
+                        return true;
+                    } else {
+                        console.log('Please update emplloyee role');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: "input",
+                name: "employeeId",
+                message: "What is this employee's current ID?",
+                input: "",
+                validate: employeeId => {
+                    if (employeeId) {
+                        return true;
+                    } else {
+                        console.log('Please enter employee ID');
+                        return false;
+                    };
+                }
+            }
+        ])
+        .then((answer) => {
+            const { input } = answer;
+
+            const sql = `UPDATE employees SET manager_id = ("${answer.updateEmpManager}") WHERE id = ("${answer.employeeId}")`
+            connection.query(sql, input, (err, res) => {
+                if (err) throw err;
+
+                console.log("Updated employee manager")
 
                 console.table(res);
 
