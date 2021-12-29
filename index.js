@@ -463,5 +463,53 @@ const deleteEmployee = () => {
         })
     })
 }
+const deleteDepartment = () => {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "deleteDept",
+            message: "Delete an department by ID",
+            input: ""
+        }
+    ])
+    .then((answer) => {
+        const { input } = answer;
+
+        const sql = `DELETE FROM department WHERE id = ("${answer.deleteDept}")`
+
+        connection.query(sql, input, (err, res) => {
+            if (err) throw err;
+
+            console.table(res)
+
+            loadMainMenu()
+        })
+    })
+}
+const deleteRole = () => {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "deleteRole",
+            message: "Delete an role by ID",
+            input: ""
+        }
+    ])
+    .then((answer) => {
+        const { input } = answer;
+
+        const sql = `DELETE FROM roles WHERE id = ("${answer.deleteRole}")`
+
+        connection.query(sql, input, (err, res) => {
+            if (err) throw err;
+
+            console.table(res)
+
+            loadMainMenu()
+        })
+    })
+}
 
 loadMainMenu()
