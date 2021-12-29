@@ -2,6 +2,7 @@ var inquirer = require('inquirer');
 const cTable = require('console.table');
 const connection = require('./db/connection');
 const { promise } = require('./db/connection');
+const { addListener } = require('process');
 
 const loadMainMenu = () => {
     inquirer
@@ -214,8 +215,8 @@ const addNewEmployee = () => {
                 name: 'addEmpId',
                 message: "Add an ID for the employee?",
                 input: "",
-                validate: addDept => {
-                    if (addDept) {
+                validate: addEmpId => {
+                    if (addEmpId) {
                         return true;
                     } else {
                         console.log('Please enter a Employee ID');
@@ -228,8 +229,8 @@ const addNewEmployee = () => {
                 name: 'addFirstName',
                 message: "What is the employee's first name?",
                 input: "",
-                validate: addDept => {
-                    if (addDept) {
+                validate: addFirstName => {
+                    if (addFirstName) {
                         return true;
                     } else {
                         console.log('Please enter a Employee first name');
@@ -242,8 +243,8 @@ const addNewEmployee = () => {
                 name: 'addLastName',
                 message: "What is the employee's last name?",
                 input: "",
-                validate: addDept => {
-                    if (addDept) {
+                validate: addLastName => {
+                    if (addLastName) {
                         return true;
                     } else {
                         console.log('Please enter a Employee last name');
@@ -256,8 +257,8 @@ const addNewEmployee = () => {
                 name: 'addRoleId',
                 message: "What Role ID is this employee connected to?",
                 input: "",
-                validate: addDept => {
-                    if (addDept) {
+                validate: addRoleId => {
+                    if (addRoleId) {
                         return true;
                     } else {
                         console.log('Please enter a Employee role id');
@@ -270,8 +271,8 @@ const addNewEmployee = () => {
                 name: 'addManagerId',
                 message: "What manager ID is this employee connected to?",
                 input: "",
-                validate: addDept => {
-                    if (addDept) {
+                validate: addManagerId => {
+                    if (addManagerId) {
                         return true;
                     } else {
                         console.log('Please enter a Employee manager id');
@@ -283,10 +284,13 @@ const addNewEmployee = () => {
         .then((answer) => {
             const { input } = answer;
             const sql = `INSERT INTO roles (id, first_name, last_name, role_id, manager_id)
-        VALUES ("${}", "${}", "${}", "${}", "${}",)`;
-            connection.query(sql, answer.addEmployee, (err, result) => {
+        VALUES ("${answer.addEmpId}", "${answer.addFirstName}", "${answer.addLastName}", "${answer.addRoleId}", "${answer.addManagerId}",)`;
+            connection.query(sql, input, (err, res) => {
                 if (err) throw err;
-                console.log('Added ' + answer.addEmployee + " to employee!");
+                
+                console.table(res)
+
+                loadMainMenu();
             })
         })
 }
