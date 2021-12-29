@@ -19,7 +19,9 @@ const loadMainMenu = () => {
                     "Add an employee",
                     "Update employee role",
                     "Update employee manager",
-                    "Delete an employee"
+                    "Delete an employee",
+                    "Delete a department",
+                    "Delete a role"
                 ]
             }
         ])
@@ -55,6 +57,12 @@ const loadMainMenu = () => {
             };
             if (choices === "Delete an employee") {
                 deleteEmployee();
+            };
+            if (choices === "Delete a department") {
+                deleteDepartment();
+            };
+            if (choices === "Delete a role") {
+                deleteRole();
             };
         });
 };
