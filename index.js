@@ -213,6 +213,7 @@ const addNewEmployee = () => {
                 type: 'input',
                 name: 'addEmpId',
                 message: "Add an ID for the employee?",
+                input: "",
                 validate: addDept => {
                     if (addDept) {
                         return true;
@@ -226,6 +227,7 @@ const addNewEmployee = () => {
                 type: 'input',
                 name: 'addFirstName',
                 message: "What is the employee's first name?",
+                input: "",
                 validate: addDept => {
                     if (addDept) {
                         return true;
@@ -239,6 +241,7 @@ const addNewEmployee = () => {
                 type: 'input',
                 name: 'addLastName',
                 message: "What is the employee's last name?",
+                input: "",
                 validate: addDept => {
                     if (addDept) {
                         return true;
@@ -252,6 +255,7 @@ const addNewEmployee = () => {
                 type: 'input',
                 name: 'addRoleId',
                 message: "What Role ID is this employee connected to?",
+                input: "",
                 validate: addDept => {
                     if (addDept) {
                         return true;
@@ -265,6 +269,7 @@ const addNewEmployee = () => {
                 type: 'input',
                 name: 'addManagerId',
                 message: "What manager ID is this employee connected to?",
+                input: "",
                 validate: addDept => {
                     if (addDept) {
                         return true;
@@ -275,9 +280,10 @@ const addNewEmployee = () => {
                 }
             }
         ])
-        .then(answer => {
+        .then((answer) => {
+            const { input } = answer;
             const sql = `INSERT INTO roles (id, first_name, last_name, role_id, manager_id)
-        VALUES (?,?,?,?,?)`;
+        VALUES ("${}", "${}", "${}", "${}", "${}",)`;
             connection.query(sql, answer.addEmployee, (err, result) => {
                 if (err) throw err;
                 console.log('Added ' + answer.addEmployee + " to employee!");
