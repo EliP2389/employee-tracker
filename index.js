@@ -65,6 +65,7 @@ const displayRoles = () => {
 
     connection.query(sql, (err, res) => {
         if (err) throw err;
+
         console.table(res)
 
         loadMainMenu()
@@ -288,12 +289,34 @@ const addNewEmployee = () => {
             connection.query(sql, input, (err, res) => {
                 if (err) throw err;
 
-                console.log("Added" + answer.addEmpId + answer.addFirstName + answer.addLastName + answer.addRoleId + answer.addManagerId + " to Employee" )
+                console.log("Added" + answer.addEmpId + answer.addFirstName + answer.addLastName + answer.addRoleId + answer.addManagerId + " to Employee")
 
                 console.table(res)
 
                 loadMainMenu();
             })
         })
+
 }
+
+const updateEmployeeRole = () => {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "updateEmpRole",
+                message: "What new role is this Employee?",
+                input: "",
+                validate: updateEmpRole => {
+                    if (updateEmpRole) {
+                        return true;
+                    } else {
+                        console.log('Please update emplloyee role');
+                        return false;
+                    }
+                }
+            }
+        ])
+}
+
 loadMainMenu()
