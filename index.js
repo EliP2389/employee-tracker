@@ -217,7 +217,7 @@ const addNewEmployee = () => {
                     if (addDept) {
                         return true;
                     } else {
-                        console.log('Please enter a Employee');
+                        console.log('Please enter a Employee ID');
                         return false;
                     }
                 }
@@ -230,7 +230,7 @@ const addNewEmployee = () => {
                     if (addDept) {
                         return true;
                     } else {
-                        console.log('Please enter a Employee');
+                        console.log('Please enter a Employee first name');
                         return false;
                     }
                 }
@@ -243,7 +243,7 @@ const addNewEmployee = () => {
                     if (addDept) {
                         return true;
                     } else {
-                        console.log('Please enter a Employee');
+                        console.log('Please enter a Employee last name');
                         return false;
                     }
                 }
@@ -256,7 +256,7 @@ const addNewEmployee = () => {
                     if (addDept) {
                         return true;
                     } else {
-                        console.log('Please enter a Employee');
+                        console.log('Please enter a Employee role id');
                         return false;
                     }
                 }
@@ -269,7 +269,7 @@ const addNewEmployee = () => {
                     if (addDept) {
                         return true;
                     } else {
-                        console.log('Please enter a Employee');
+                        console.log('Please enter a Employee manager id');
                         return false;
                     }
                 }
