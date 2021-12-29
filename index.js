@@ -1,6 +1,7 @@
 var inquirer = require('inquirer');
 const cTable = require('console.table');
 const connection = require('./db/connection');
+const { promise } = require('./db/connection');
 
 const loadMainMenu = () => {
     inquirer
@@ -92,6 +93,7 @@ const addNewDepartment = () => {
                type: 'input',
                name: 'addId',
                message: 'Add an ID',
+               input: "",
                validate: addId => {
                    if (addId) {
                        return true;
@@ -105,6 +107,7 @@ const addNewDepartment = () => {
                 type: 'input',
                 name: 'addDepartment',
                 message: "Add new department name",
+                input: "",
                 validate: addDepartment => {
                     if (addDepartment) {
                         return true;
@@ -115,14 +118,18 @@ const addNewDepartment = () => {
                 }
             }
         ])
-        .then(answer => {
-            const sql = `INSERT INTO department (id, name_) VALUES (?,?)`;
-            connection.query(sql, answer.addId, answer.addDepartment, (err, result) => {
-                if (err) throw err;
-                console.log('Added ' + answer.addID + answer.addDepartment + " to departments!");
+        .then((answer) => {
+            const { input } = answer;
+              const sql = `INSERT INTO department (id, name_) VALUES ("${answer.addId}","${answer.addDepartment}")`;
 
-                loadMainMenu();
-            });
+              connection.promise().query(sql, input, (err, res) => {
+                  if (err) throw err;
+
+                  console.table(res)
+
+                   loadMainMenu()
+              }) ;
+
         });
 };
 
@@ -133,6 +140,7 @@ const addNewRole = () => {
                 type: 'input',
                 name: 'addRoleId',
                 message: "Add a role ID",
+                input: "",
                 validate: addRoleId => {
                     if (addRoleId) {
                         return true;
@@ -146,6 +154,7 @@ const addNewRole = () => {
                 type: 'input',
                 name: 'addRoleTitle',
                 message: "Add role TITLE",
+                input: "",
                 validate: addRoleTitle => {
                     if (addRoleTitle) {
                         return true;
@@ -159,6 +168,7 @@ const addNewRole = () => {
                 type: 'input',
                 name: 'addRoleSalary',
                 message: "Add role Salary",
+                input: "",
                 validate: addRoleSalary => {
                     if (addRoleSalary) {
                         return true;
@@ -172,6 +182,7 @@ const addNewRole = () => {
                 type: 'input',
                 name: 'addDeptId',
                 message: "What Department Id do you want to add role to?",
+                input: "",
                 validate: addDeptId => {
                     if (addDeptId) {
                         return true;
@@ -182,11 +193,14 @@ const addNewRole = () => {
                 }
             }
         ])
-        .then(answer => {
-            const sql = "INSERT INTO roles (id, title, salary, department_id) VALUES (?,?,?,?)";
-            connection.query(sql, answer.addRoleId, answer.addRoleTitle, answer.addRoleSalary, answer.addDeptId, (err, result) => {
+        .then((answer) => {
+            const { input } = answer;
+            const sql = `INSERT INTO roles (id, title, salary, department_id) VALUES ("${answer.addRoleId}","${answer.addRoleTitle}","${answer.addRoleSalary}","${answer.addDeptId}")`;
+            connection.query(sql, input, (err, res) => {
                 if (err) throw err;
-                console.log('Added ' + answer.Role + " to roles!");
+                console.log('Added ' + answer.addRoleId + answer.addRoleTitle + answer.addRoleSalary + answer.addDeptId + " to roles!");
+
+                console.table(res);
 
                 loadMainMenu()
             })
